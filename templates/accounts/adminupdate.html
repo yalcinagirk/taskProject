@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% csrf_token %}
+
+
+<div style="margin:5% 40%">
+    <h1>Admin Update</h1>
+    {{ form.as_table }}
+    <form>
+        <input class="btn btn-success" type="SUBMIT" name="submit" value="Update" style="margin:0% 20%">
+    </form>
+</div>
+
+
+{% endblock content %}

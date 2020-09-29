@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}
+    Task List
+{% endblock%}
+{% block content %}
+<div class="col-md-auto" style="margin:5% 12%">
+  <!--
+    0/5 Completed.
+    <div class="progress" style="margin-bottom:20px">
+      <div class="progress-bar bg-success" role="progressbar" aria-valuenow="70"
+      aria-valuemin="0" aria-valuemax="100" style="width:100%">
+        <span class="sr-only">70% Complete</span>
+
+      </div>
+    </div>-->
+    <a class="btn btn-success pull-left" style="margin-bottom:50px" href="{% url 'task:addtag'%}">CREATE</a>
+    
+    {% if object_list %}
+        <table class="table" >
+          <thead>
+            <tr>
+              <th scope="col"><h3>ID</h3></th>
+              <th scope="col"><h3>title</h3></th>
+              <th scope="col"><h3>content</h3></th>
+              <th scope="col"><h3>Update</h3></th>
+              <th scope="col"><h3>Delete</h3></th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for task in object_list %}
+          <tr>
+            <th scope="row">{{task.id}}</th>
+              <th scope="row">{{task.title}}</th>
+            <td>{{task.content}}</td>
+            <form method="POST">
+              <td><a class="btn btn-success" href="{% url 'task:taskupdate' task.pk %}">Güncelle</a></td>
+              <td><a  class="btn btn-danger" href="{% url 'task:taskdelete' task.pk %}">Sil</a></td>
+
+            </form>
+            
+          </tr>
+            {% endfor %}
+
+          </tbody>
+        </table>
+
+    {% else %}
+        <div class="alert alert-danger">
+            No tags.
+        </div>
+    {% endif %}
+    <form method="post">
+    </form>
+</div>
+{% endblock content %}
