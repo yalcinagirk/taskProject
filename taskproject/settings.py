@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'task',
     'dashboard',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -131,6 +132,8 @@ STATICFILES_DIRS = [
 ]
 # Project
 LOGIN_URL = '/user/login'
-LOGOUT_URL = '/user/login'
+LOGOUT_URL = '/home'
+LOGIN_REDIRECT_URL = '/home'
+LOGOUT_REDIRECT_URL = '/user/login'
 
 
