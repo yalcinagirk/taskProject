@@ -70,11 +70,14 @@
 						<span class="d-none d-md-inline">{{request.user}}</span> <b class="caret"></b>
 					</a>
 					<div class="dropdown-menu dropdown-menu-right">
+						<!--
+							<a href="javascript:;" class="dropdown-item">Edit Profile</a>
+							<a href="javascript:;" class="dropdown-item"><span class="badge badge-danger pull-right">0</span> Inbox</a>
+							<a href="javascript:;" class="dropdown-item">Calendar</a>
+							<a href="javascript:;" class="dropdown-item">Setting</a>
+
+						-->
 						
-						<a href="javascript:;" class="dropdown-item">Edit Profile</a>
-						<a href="javascript:;" class="dropdown-item"><span class="badge badge-danger pull-right">0</span> Inbox</a>
-						<a href="javascript:;" class="dropdown-item">Calendar</a>
-						<a href="javascript:;" class="dropdown-item">Setting</a>
 						<div class="dropdown-divider"></div>
 						
 						<a href="{% url 'user:logout' request.user.id%}" class="dropdown-item">Log Out</a>
@@ -116,17 +119,17 @@
 				<!-- end sidebar user -->
 				<!-- begin sidebar nav -->
 				<ul class="nav"><li class="nav-header">Navigation</li>
-					<li class="">
-						<a href="{% url 'task:tasklist' %}">
-							<i class="fa fa-pencil-alt"></i>
-							<span >Task List</span>
+					
+					<li class="has-sub">
+						<a href="javascript:;">
+							<b class="caret"></b>
+							<i class="fa fa-cog"></i> 
+							<span class="">Management</span>
 						</a>
-					</li>
-					<li class="">
-						<a href="{% url 'user:userlist'%}">
-							<i class="fa fa-cog"></i>
-							<span >Management</span>
-						</a>
+						<ul class="sub-menu">
+							<li><a href="{% url 'user:userlist' %}">User List</a></li>
+							<li><a href="{% url 'task:tasklist' %}">Task List</a></li>
+						</ul>
 					</li>
 					<!-- begin sidebar minify button -->
 					<li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>
