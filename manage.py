@@ -1,11 +1,11 @@
 #!/usr/bin/env python
-"""Django's command-line utility for administrative tasks."""
+"""Django's command-line utility for administrative data-table-combine."""
 import os
 import sys
 
 
 def main():
-    """Run administrative tasks."""
+    """Run administrative data-table-combine."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'taskproject.settings')
     try:
         from django.core.management import execute_from_command_line
