@@ -16,13 +16,13 @@ class taskList(LoginRequiredMixin, ListView):
 class addTaskView(LoginRequiredMixin, CreateView):
     template_name = "task/addtask.html"
     model = Task
-    fields = ['title', 'content']
+    fields = ['query', 'response', 'status', 'correct']
     success_url = reverse_lazy('task:tasklist')
 
 class updateTaskView(LoginRequiredMixin, UpdateView):
     template_name = "task/updatetask.html"
     model = Task
-    fields = ['title', 'content']
+    fields = ['query', 'response', 'status', 'correct']
     success_url = reverse_lazy('task:tasklist')
 
 class deleteTaskView(LoginRequiredMixin, View):
