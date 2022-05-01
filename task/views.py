@@ -1,39 +1,82 @@
-from django.shortcuts import render, redirect
-from django.views.generic import (View, UpdateView, TemplateView,
-                                 ListView, CreateView, DeleteView)
-# Create your views here.
-from task.models import Task
-from django.urls import reverse_lazy, reverse
-from django import http
+from rest_framework.generics import ListAPIView, CreateAPIView
+from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponseRedirect
-from django.contrib.auth.mixins import LoginRequiredMixin
 
-class taskList(LoginRequiredMixin, ListView):
-    template_name = "task/tasklist.html"
-    model = Task
+from task.serializers import TaskSerializer, SurveySerializer, UnlabeledSerializer, LabelSerializer
+from task.models import Task
+from unlabeled.models import UnLabeledData
+from label.models import Label
+from survey.models import Survey
 
-class addTaskView(LoginRequiredMixin, CreateView):
-    template_name = "task/addtask.html"
-    model = Task
-    fields = ['query', 'response', 'status', 'correct']
-    success_url = reverse_lazy('task:tasklist')
 
-class updateTaskView(LoginRequiredMixin, UpdateView):
-    template_name = "task/updatetask.html"
-    model = Task
-    fields = ['query', 'response', 'status', 'correct']
-    success_url = reverse_lazy('task:tasklist')
+################### TASK ###################
 
-class deleteTaskView(LoginRequiredMixin, View):
-    model = Task
+class TaskListView(ListAPIView):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+
+
+class TaskCreateView(CreateAPIView):
+    serializer_class = TaskSerializer
+    queryset = Task.objects.all()
+
+################### SURVEY ###################
+
+class BaseSurveyView(APIView):
+    def get_queryset(self):
+        task_id = self.kwargs['task_id']
+        qs = super(SurveyListView, self).get_queryset()
+        if qs.exists():
+            qs = qs.filter(task__id=task_id).order_by('id')
+        return qs
+
+
+class SurveyListView(ListAPIView, BaseSurveyView):
+    queryset = Survey.objects.all()
+    serializer_class = SurveySerializer
+
     
 
-    def get(self, request, pk, **kwargs):
-        obj = get_object_or_404(self.model, pk=pk)
-        obj.delete()
-        
-        return redirect('task:tasklist')
-    
+class SurveyCreateView(CreateAPIView, BaseSurveyView):
+    queryset = Survey.objects.all()
+    serializer_class = SurveySerializer
+
+################### UBLABELED ###################
+
+class BaseUnlabeledView(APIView):
+    def get_queryset(self):
+        task_id = self.kwargs.get('task_id')
+        qs = super(UnlabeledListView, self).get_queryset()
+        if qs.exists():
+            qs = qs.filter(surveyy__task__id=task_id).order_by('id')
+        return qs
 
 
+class UnlabeledListView(ListAPIView, BaseUnlabeledView):
+    queryset = UnLabeledData.objects.all()
+    serializer_class = UnlabeledSerializer
+
+
+class UnlabeledCreateView(CreateAPIView, BaseUnlabeledView):
+    queryset = UnLabeledData.objects.all()
+    serializer_class = UnlabeledSerializer
+
+################### LABEL ###################
+
+class BaseLabelView(APIView):
+    def get_queryset(self):
+        task_id = self.kwargs.get('task_id')
+        qs = super(LabelListView, self).get_queryset()
+        if qs.exists():
+            qs = qs.filter(surveyy__task__id=task_id).order_by('id')
+        return qs
+
+
+class LabelListView(ListAPIView):
+    queryset = Label.objects.all()
+    serializer_class = LabelSerializer
+
+
+class LabelCreateView(CreateAPIView):
+    queryset = Label.objects.all()
+    serializer_class = LabelSerializer

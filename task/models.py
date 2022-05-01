@@ -1,15 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
 
 class Task(models.Model):
-    query = models.CharField(max_length=150)
-    response = models.CharField(max_length=150)
-    status = models.BooleanField(default=True)
-    correct = models.CharField(max_length=150, blank=True)
-    created_date = models.DateTimeField(auto_now_add=True)
-    updated_date = models.DateTimeField(auto_now=True)
+    id = models.AutoField(primary_key=True)
+    created_by  = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='created_by')
+    assigned = models.ManyToManyField(User, related_name='assigned')
+    name = models.CharField(max_length=120)
 
     def __str__(self):
-        return self.query
+        return self.name

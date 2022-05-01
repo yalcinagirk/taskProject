@@ -1,7 +1,11 @@
-from django.urls import path
-from api.views import UserListView
+from django.urls import path, include
 
+# from api.views
 
 urlpatterns = [
-    path('user_list', UserListView.as_view(), name='user_list'),
+    path('task/', include('task.urls')),
+    path('survey/', include('survey.urls')),
+    path('unlabeled/', include('unlabeled.urls')),
+    path('label/', include('label.urls')),
+    path('user/', include('user.urls')),
 ]

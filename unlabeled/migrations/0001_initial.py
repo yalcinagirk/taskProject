@@ -15,12 +15,12 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Task',
+            name='UnLabeledData',
             fields=[
                 ('id', models.AutoField(primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=120)),
-                ('assigned', models.ManyToManyField(related_name='assigned', to=settings.AUTH_USER_MODEL)),
-                ('created_by', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='created_by', to=settings.AUTH_USER_MODEL)),
+                ('text', models.TextField()),
+                ('created_by', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
+                ('user', models.ManyToManyField(related_name='user', to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]

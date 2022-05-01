@@ -1,4 +1,7 @@
 from django.contrib import admin
-from task.models import Task
-# Register your models here.
-admin.site.register(Task)
+from django.apps import apps
+
+app = apps.get_app_config('task')
+
+for model_name, model in app.models.items():
+    admin.site.register(model)

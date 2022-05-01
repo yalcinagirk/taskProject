@@ -39,16 +39,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'drf_yasg',
     'task',
-    'dashboard',
-    'user',
     'api',
+    'user',
+    'survey',
+    'label',
+    'unlabeled'
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+    'DEFAULT_PERMISSION_CLASSES': [],
+    'DEFAULT_AUTHENTICATION_CLASSES': []
 }
 
 MIDDLEWARE = [
@@ -141,14 +143,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+""""
 STATICFILES_DIRS = [
     BASE_DIR / "static",
     '/var/www/static/',
 ]
 # Project
+
 LOGIN_URL = '/user/login'
 LOGOUT_URL = '/home'
 LOGIN_REDIRECT_URL = '/home'
 LOGOUT_REDIRECT_URL = '/user/login'
-
+"""
 
